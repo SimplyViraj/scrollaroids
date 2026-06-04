@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { TITLES, getTitle, type Title } from "@/data/titles";
 import { MediaArtwork } from "@/lib/media";
 import { useMyList } from "@/lib/my-list";
-import { VideoPlayer, type PlayerEpisode } from "@/components/VideoPlayer";
+import { VideoPlayer, type PlayerEpisode } from "@/components/VideoPlayer/VideoPlayer";
 
 export function TitleModal({
   titleId,
@@ -248,4 +248,45 @@ export function TitleModal({
                               </button>
                               <span className="shrink-0 text-sm text-white/50">{episode.duration}</span>
                             </div>
-                            <p className="text-sm lead
+                            <p className="text-sm leading-6 text-white/60">{episode.synopsis}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  featuredRelated && (
+                    <>
+                      <h4 className="mb-4 text-xl font-bold text-white">More Like This</h4>
+                      <div className="grid gap-4 md:grid-cols-[160px_1fr]">
+                        <div className="relative aspect-[2/3] overflow-hidden rounded-sm">
+                          <MediaArtwork
+                            media={featuredRelated.poster}
+                            className="absolute inset-0 h-full w-full object-cover"
+                          />
+                        </div>
+                        <div className="space-y-3">
+                          <div className="flex flex-wrap items-center gap-2 text-sm">
+                            <span className="font-semibold text-green-400">{featuredRelated.match}% Match</span>
+                            <span className="text-white">{featuredRelated.year}</span>
+                            <span className="border border-white/40 px-1.5 text-xs text-white">{featuredRelated.rating}</span>
+                            <span className="text-white">{featuredRelated.duration}</span>
+                          </div>
+                          <p className="text-sm leading-6 text-white/80">{featuredRelated.synopsis}</p>
+                          <div className="text-sm text-white/60">
+                            <span className="text-white/45">Genres: </span>
+                            <span className="text-white">{featuredRelated.genres.join(", ")}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
